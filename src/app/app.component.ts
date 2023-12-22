@@ -26,7 +26,10 @@ export class AppComponent {
     this.supabase.authChanges((_, session) => {
       this.session = session
       this.isLoggedIn = session !== null;
-      this.username = session?.user?.email;
+      this.supabase.getProfile()
+      .then(({ data, error }) => {
+        this.username = data?.username;
+      })
     })
   }
 

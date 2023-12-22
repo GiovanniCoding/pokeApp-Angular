@@ -71,13 +71,22 @@ export class SupabaseService {
     return this.supabase.auth.signOut()
   }
 
-  updateProfile(profile: Profile) {
-    const update = {
-      ...profile,
-      updated_at: new Date(),
-    }
+  async getProfile() {
+    const { data: { session } } = await this.getSession()
+    return await this.supabase
+      .from('profile')
+      .select('username')
+      .eq('user_id', session?.user?.id)
+      .single()
+  }
 
-    return this.supabase.from('profile').upsert(update)
+  async updateProfile(username: string) {
+    const { data: { session } } = await this.getSession()
+    await this.supabase
+      .from('profile')
+      .update({ username: username })
+      .eq('user_id', session?.user?.id)
+      .select()
   }
 
   async addFavoritePokemon(id: number) {

@@ -28,11 +28,8 @@ export class RegisterComponent {
         throw error
       } else {
         this.supabase.session
-        // Save the username in the DB
-        await this.supabase.updateProfile({
-          id: this.supabase.session?.user?.id,
-          username: this.username
-        })
+
+        await this.supabase.updateProfile(this.username)
         
         this.router.navigate(['/dashboard'])
       }
