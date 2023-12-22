@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Session } from '@supabase/supabase-js';
 import { SupabaseService } from './_services/supabase.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class AppComponent {
   constructor(
+    private router: Router,
     private readonly supabase: SupabaseService,
   ) {}
 
@@ -31,6 +32,6 @@ export class AppComponent {
 
   async signOut() {
     await this.supabase.signOut()
-    window.location.reload()
+    this.router.navigate(['/home']);
   }
 }
