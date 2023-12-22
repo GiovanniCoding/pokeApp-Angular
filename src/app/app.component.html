@@ -1,6 +1,6 @@
 <div id="app">
-    <nav class="navbar">
-        <ul>
+    <nav>
+        <ul class="navbar">
             @if (!isLoggedIn) {
                 <li>
                     <a routerLink="home">Home </a>
@@ -13,7 +13,7 @@
         </ul>
 
         @if (!isLoggedIn) {
-        <ul>
+        <ul class="navbar">
             <li>
                 <a routerLink="register">Sign Up</a>
             </li>
@@ -22,7 +22,7 @@
             </li>
         </ul>
         } @else {
-        <ul>
+        <ul class="navbar">
             <!-- <li>
                 <a routerLink="">{{ username }}</a>
             </li> -->
