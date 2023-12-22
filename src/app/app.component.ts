@@ -30,21 +30,6 @@ export class AppComponent {
 
   async signOut() {
     await this.supabase.signOut()
+    window.location.reload()
   }
-
-  // async signOut(): Promise<void> {
-  //   try {
-  //     const { error } = await this.supabase.signOut()
-  //     console.log('->', error)
-  //     if (error) {
-  //       throw error
-  //     } else {
-  //       window.location.reload();
-  //     }
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       alert(error.message)
-  //     }
-  //   }
-  // }
 }
