@@ -1,1 +1,23 @@
-<p>dashboard works!</p>
+<h1>Kanto Pokemons</h1>
+<ul class="pokemons">
+    @for (pokemon of kantoPokemons; track pokemon.name) {
+        <li>
+            @if (pokemon.isFavorite) {
+            <button
+                class="favorite"
+                (click)="changeFavoriteState(pokemon)"
+            >
+                &hearts;
+            </button>
+            } @else {
+                <button
+                    (click)="changeFavoriteState(pokemon)"
+                >
+                    &hearts;
+                </button>
+            }
+            <img src="{{ POKEMON_IMAGE_URL + pokemon.imgName }}" alt="{{ pokemon.name }}">
+            <h3>{{ pokemon.name }}</h3>
+        </li>
+    }
+</ul>

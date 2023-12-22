@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Session } from '@supabase/supabase-js';
 import { SupabaseService } from './_services/supabase.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink],
+  imports: [CommonModule, RouterOutlet, RouterLink, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

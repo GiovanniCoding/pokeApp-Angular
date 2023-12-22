@@ -75,4 +75,21 @@ export class SupabaseService {
 
     return this.supabase.from('profile').upsert(update)
   }
+
+  addFavoritePokemon(id: number) {
+    return this.supabase
+      .from('favoritePokemon')
+      .insert({
+        pokemon: id,
+        user_id: this.session?.user?.id,
+      })
+  }
+
+  removeFavoritePokemon(id: number) {
+    return this.supabase
+      .from('favoritePokemon')
+      .delete()
+      .eq('pokemon', id)
+      .eq('user_id', this.session?.user?.id)
+  }
 }
