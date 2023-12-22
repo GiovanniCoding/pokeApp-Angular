@@ -1,0 +1,19 @@
+section {
+    margin: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    cursor: pointer;
+    text-decoration: none;
+}
