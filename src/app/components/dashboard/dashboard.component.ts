@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SupabaseService } from '../_services/supabase.service';
+import { SupabaseService } from '../../_services/supabase.service';
 import { Router } from '@angular/router';
 
 @Component({

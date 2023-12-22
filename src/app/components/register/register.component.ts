@@ -1,38 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SupabaseService } from '../_services/supabase.service';
+import { SupabaseService } from '../../_services/supabase.service';
 import { Router } from '@angular/router';
-import { Session } from '@supabase/supabase-js';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
 })
-export class LoginComponent {
+export class RegisterComponent {
+  loading: boolean = false;
+  username: string = '';
+  email: string = '';
+  password: string = '';
+
   constructor(
     private readonly supabase: SupabaseService,
     private router: Router
   ) {}
 
-  session: Session | null = this.supabase.session
-
-  ngOnInit() {
-    this.supabase.authChanges((_, session) => (this.session = session))
-  }
-
-  loading: boolean = false;
-  email: string = '';
-  password: string = '';
-
-  async signIn(): Promise<void> {
-    
+  async signUp(): Promise<void> {
+    console.log(this.username, this.email, this.password)
     try {
       this.loading = true
-      const { error } = await this.supabase.signIn(this.email, this.password)
+      const { error } = await this.supabase.signUp(this.email, this.password, this.username)
       if (error) {
         throw error
       } else {

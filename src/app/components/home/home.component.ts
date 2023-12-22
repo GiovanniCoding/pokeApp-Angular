@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SupabaseService } from '../_services/supabase.service';
+import { SupabaseService } from '../../_services/supabase.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Router, RouterLink } from '@angular/router';
 import { Session } from '@supabase/supabase-js';
