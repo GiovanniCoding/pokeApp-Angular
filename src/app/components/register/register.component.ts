@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  loading: boolean = false;
   username: string = '';
   email: string = '';
   password: string = '';
@@ -23,21 +22,25 @@ export class RegisterComponent {
   ) {}
 
   async signUp(): Promise<void> {
-    console.log(this.username, this.email, this.password)
     try {
-      this.loading = true
       const { error } = await this.supabase.signUp(this.email, this.password, this.username)
       if (error) {
         throw error
       } else {
+        this.supabase.session
+        console.log(this.supabase.session)
+        // Save the username in the DB
+        await this.supabase.updateProfile({
+          id: this.supabase.session?.user?.id,
+          username: this.username
+        })
+        
         this.router.navigate(['/dashboard'])
       }
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message)
       }
-    } finally {
-      this.loading = false
     }
   }
 }

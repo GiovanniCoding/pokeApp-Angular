@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { SupabaseService } from '../../_services/supabase.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,11 +7,4 @@ import { Router } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
-  loading: boolean = false;
-
-  constructor(
-    private readonly supabase: SupabaseService,
-    private router: Router
-  ) {}
-}
+export class DashboardComponent {}

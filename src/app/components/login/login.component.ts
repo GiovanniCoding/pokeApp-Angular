@@ -24,14 +24,12 @@ export class LoginComponent {
     this.supabase.authChanges((_, session) => (this.session = session))
   }
 
-  loading: boolean = false;
   email: string = '';
   password: string = '';
 
   async signIn(): Promise<void> {
     
     try {
-      this.loading = true
       const { error } = await this.supabase.signIn(this.email, this.password)
       if (error) {
         throw error
@@ -42,8 +40,6 @@ export class LoginComponent {
       if (error instanceof Error) {
         alert(error.message)
       }
-    } finally {
-      this.loading = false
     }
   }
 }

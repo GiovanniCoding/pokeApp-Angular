@@ -66,4 +66,13 @@ export class SupabaseService {
   signOut() {
     return this.supabase.auth.signOut()
   }
+
+  updateProfile(profile: Profile) {
+    const update = {
+      ...profile,
+      updated_at: new Date(),
+    }
+
+    return this.supabase.from('profile').upsert(update)
+  }
 }
