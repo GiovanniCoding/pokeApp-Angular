@@ -27,7 +27,7 @@ export class AppComponent {
       this.session = session
       this.isLoggedIn = session !== null;
       this.supabase.getProfile()
-      .then(({ data, error }) => {
+      .then(({ data }) => {
         this.username = data?.username;
       })
     })

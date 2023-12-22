@@ -10,6 +10,7 @@ import {
   User,
 } from '@supabase/supabase-js'
 import { environment } from '../../environments/environment'
+import { PokemonInterface } from '../_interfaces/pokemon-interface'
 
 export interface Profile {
   id?: string
@@ -89,22 +90,22 @@ export class SupabaseService {
       .select()
   }
 
-  async addFavoritePokemon(id: number) {
+  async addFavoritePokemon(pokemon: PokemonInterface) {
     const { data: { session } } = await this.getSession()
     return this.supabase
       .from('favoritePokemon')
       .insert({
-        pokemon: id,
+        pokemon: pokemon.name,
         user_id: session?.user?.id,
       })
   }
 
-  async removeFavoritePokemon(id: number) {
+  async removeFavoritePokemon(pokemon: PokemonInterface) {
     const { data: { session } } = await this.getSession()
     return this.supabase
       .from('favoritePokemon')
       .delete()
-      .eq('pokemon', id)
+      .eq('pokemon', pokemon.name)
       .eq('user_id', session?.user?.id)
   }
 

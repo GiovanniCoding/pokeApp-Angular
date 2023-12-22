@@ -1,0 +1,29 @@
+<h1>My Favorite Kanto Pokemons</h1>
+@if (kantoPokemons.length === 0) {
+    <section>
+        <h1 class="no-favorite">You don't have any favorite Kanto Pokemons</h1>
+    </section>
+} @else {
+    <ul class="pokemons">
+        @for (pokemon of kantoPokemons; track pokemon.name) {
+            <li>
+                @if (pokemon.isFavorite) {
+                <button
+                    class="favorite"
+                    (click)="changeFavoriteState(pokemon)"
+                >
+                    &hearts;
+                </button>
+                } @else {
+                    <button
+                        (click)="changeFavoriteState(pokemon)"
+                    >
+                        &hearts;
+                    </button>
+                }
+                <img src="{{ POKEMON_IMAGE_URL + pokemon.imgName }}" alt="{{ pokemon.name }}">
+                <h3>{{ pokemon.name }}</h3>
+            </li>
+        }
+    </ul>
+}

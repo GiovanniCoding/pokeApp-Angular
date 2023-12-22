@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { SupabaseService } from '../../_services/supabase.service';
 import { PokeapiService } from '../../_services/pokeapi.service';
+import { SupabaseService } from '../../_services/supabase.service';
 import { PokemonInterface } from '../../_interfaces/pokemon-interface';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-profile',
   standalone: true,
   imports: [],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.scss'
 })
-export class DashboardComponent {
+export class ProfileComponent {
   constructor(
     private pokeapiService: PokeapiService,
     private supabaseService: SupabaseService
@@ -21,24 +21,33 @@ export class DashboardComponent {
 
   async ngOnInit() {
     const favoritePokemons = await this.supabaseService.getFavoritePokemons();
-    const favoritePokemonsIds = favoritePokemons.data?.map((pokemon: any) => pokemon.pokemon)
+    const favoritePokemonsNames = favoritePokemons.data?.map((pokemon) => pokemon.pokemon)
+
+    console.log(favoritePokemonsNames)
 
 
     this.pokeapiService.getKantoPokemons().subscribe(
       data => {
-        data.results.forEach(function(pokemon: any, indice: number) {
-          pokemon.imgName = `${indice + 1}.png`;
-          pokemon.favorite = false;
-          if (favoritePokemonsIds?.includes(pokemon.name)) {
-            pokemon.isFavorite = true;
+        const favoritePokemons = data.results
+        .map((pokemon: PokemonInterface, index: number) => {
+          if (favoritePokemonsNames?.includes(pokemon.name)) {
+            return {
+              ...pokemon,
+              isFavorite: true,
+              imgName: `${index + 1}.png`,
+            };
+          } else {
+            return pokemon;
           }
-      });
-      this.kantoPokemons = data.results;
+        })
+        .filter((pokemon: PokemonInterface) => favoritePokemonsNames?.includes(pokemon.name));
+      this.kantoPokemons = favoritePokemons;
       }
     );
   }
 
   async changeFavoriteState(pokemon: PokemonInterface) {
+    console.log(pokemon)
     const indexToUpdate = this.kantoPokemons.findIndex(findPokemon => findPokemon.name === pokemon.name);
     const updatedPokemon = { ...pokemon, isFavorite: !pokemon.isFavorite };
     this.kantoPokemons[indexToUpdate] = updatedPokemon;
