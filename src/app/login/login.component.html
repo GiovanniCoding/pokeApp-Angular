@@ -1,1 +1,24 @@
-<p>login works!</p>
+<section>
+    <h1>Log In</h1>
+    <form>
+        <label for="email">
+            Email
+            <input 
+                id="email"
+                type="email"
+                [(ngModel)]="email"
+                [ngModelOptions]="{standalone: true}"
+            />
+        </label>
+        <label for="password">
+            Password
+            <input 
+                id="password"
+                type="password"
+                [(ngModel)]="password"
+                [ngModelOptions]="{standalone: true}"
+            />
+        </label>
+        <button (click)="signIn()">Sign In</button>
+    </form>
+</section>

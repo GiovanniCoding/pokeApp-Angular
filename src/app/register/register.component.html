@@ -1,0 +1,33 @@
+<section>
+    <h1>Register</h1>
+    <form>
+        <label for="username">
+            Username
+            <input 
+                id="username"
+                type="text"
+                [(ngModel)]="username"
+                [ngModelOptions]="{standalone: true}"
+            />
+        </label>
+        <label for="email">
+            Email
+            <input 
+                id="email"
+                type="email"
+                [(ngModel)]="email"
+                [ngModelOptions]="{standalone: true}"
+            />
+        </label>
+        <label for="password">
+            Password
+            <input 
+                id="password"
+                type="password"
+                [(ngModel)]="password"
+                [ngModelOptions]="{standalone: true}"
+            />
+        </label>
+        <button (click)="signUp()">Sign Up</button>
+    </form>
+</section>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { Session } from '@supabase/supabase-js';
+import { SupabaseService } from './_services/supabase.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +12,39 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'pokeApp';
+  constructor(
+    private readonly supabase: SupabaseService,
+  ) {}
+
+  isLoggedIn = false;
+  session: Session | null = this.supabase.session
+  username?: string;
+
+  ngOnInit(): void {
+    this.supabase.authChanges((_, session) => {
+      this.session = session
+      this.isLoggedIn = session !== null;
+      this.username = session?.user?.email;
+    })
+  }
+
+  async signOut() {
+    await this.supabase.signOut()
+  }
+
+  // async signOut(): Promise<void> {
+  //   try {
+  //     const { error } = await this.supabase.signOut()
+  //     console.log('->', error)
+  //     if (error) {
+  //       throw error
+  //     } else {
+  //       window.location.reload();
+  //     }
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       alert(error.message)
+  //     }
+  //   }
+  // }
 }

@@ -1,1 +1,39 @@
-<router-outlet></router-outlet>
+<div id="app">
+    <nav class="navbar">
+        <ul>
+            @if (!isLoggedIn) {
+                <li>
+                    <a routerLink="home">Home </a>
+                </li>
+            } @else {
+                <li>
+                    <a routerLink="dashboard">Dashboard</a>
+                </li>
+            }
+        </ul>
+
+        @if (!isLoggedIn) {
+        <ul>
+            <li>
+                <a routerLink="register">Sign Up</a>
+            </li>
+            <li>
+                <a routerLink="login">Login</a>
+            </li>
+        </ul>
+        } @else {
+        <ul>
+            <!-- <li>
+                <a routerLink="">{{ username }}</a>
+            </li> -->
+            <li>
+                <a (click)="signOut()">LogOut</a>
+            </li>
+        </ul>
+        }
+    </nav>
+
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+</div>
