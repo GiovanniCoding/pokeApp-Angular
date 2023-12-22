@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { PokeapiService } from '../../pokeapi.service';
 import { SupabaseService } from '../../_services/supabase.service';
+import { PokeapiService } from '../../_services/pokeapi.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,15 +18,21 @@ export class DashboardComponent {
   kantoPokemons: any;
   POKEMON_IMAGE_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
 
-  ngOnInit() {
+  async ngOnInit() {
+    const favoritePokemons = await this.supabaseService.getFavoritePokemons();
+    const favoritePokemonsIds = favoritePokemons.data?.map((pokemon: any) => pokemon.pokemon)
+
+
     this.pokeapiService.getKantoPokemons().subscribe(
       data => {
         data.results.forEach(function(pokemon: any, indice: number) {
           pokemon.id = indice + 1;
           pokemon.imgName = `${indice + 1}.png`;
           pokemon.favorite = false;
+          if (favoritePokemonsIds?.includes(pokemon.id)) {
+            pokemon.isFavorite = true;
+          }
       });
-      console.log(data.results)
       this.kantoPokemons = data.results;
       }
     );

@@ -34,6 +34,10 @@ export class SupabaseService {
     return this._session
   }
 
+  getSession() {
+    return this.supabase.auth.getSession()
+  }
+
   authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
     return this.supabase.auth.onAuthStateChange(callback)
   }
@@ -76,20 +80,30 @@ export class SupabaseService {
     return this.supabase.from('profile').upsert(update)
   }
 
-  addFavoritePokemon(id: number) {
+  async addFavoritePokemon(id: number) {
+    const { data: { session } } = await this.getSession()
     return this.supabase
       .from('favoritePokemon')
       .insert({
         pokemon: id,
-        user_id: this.session?.user?.id,
+        user_id: session?.user?.id,
       })
   }
 
-  removeFavoritePokemon(id: number) {
+  async removeFavoritePokemon(id: number) {
+    const { data: { session } } = await this.getSession()
     return this.supabase
       .from('favoritePokemon')
       .delete()
       .eq('pokemon', id)
-      .eq('user_id', this.session?.user?.id)
+      .eq('user_id', session?.user?.id)
+  }
+
+  async getFavoritePokemons() {
+    const session = await this.getSession()
+      return this.supabase
+        .from('favoritePokemon')
+        .select('pokemon')
+        .eq('user_id', session.data.session?.user.id)
   }
 }

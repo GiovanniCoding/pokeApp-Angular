@@ -11,7 +11,6 @@ export class PokeapiService {
   constructor(private httpClient: HttpClient) {}
 
   getKantoPokemons(): Observable<any> {
-    console.log("getKantoPokemons")
     const kantoPokemons = this.httpClient.get(
       POKEAPI_API + 'pokemon?limit=151'
     );
