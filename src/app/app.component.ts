@@ -35,6 +35,5 @@ export class AppComponent {
 
   async signOut() {
     await this.supabase.signOut()
-    this.router.navigate(['/home']);
   }
 }
